@@ -35,9 +35,10 @@ app.use(session({
 app.use('/api', imageRoutes); // Mounting imageRoutes
 
 // MongoDB connection
+const mongoose = require('mongoose');
+
 mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true // Keep this option as it is still relevant
 })
     .then(() => {
         console.log('MongoDB connected successfully');
@@ -48,6 +49,7 @@ mongoose.connect(process.env.MONGODB_URI, {
     .catch((err) => {
         console.error('MongoDB connection error:', err);
     });
+
 
 app.use(express.static(path.join(__dirname, "/virtualPhotobooth/dist")));
 app.get("*", (req, res) => {
